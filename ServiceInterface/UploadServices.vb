@@ -12,8 +12,8 @@ Namespace Global.Acme.ServiceInterface
 
         Public Sub Post(request As ServiceModel.UploadFile)
             Dim session = SessionAs(Of CustomUserSession)()
-
             Dim userDir = "/App_Data/uploads/" + session.UserAuthId + "/"
+
             For Each httpFile As IHttpFile In MyBase.Request.Files
                 VirtualFiles.WriteFile(userDir + httpFile.FileName, httpFile.InputStream)
             Next
@@ -32,6 +32,7 @@ Namespace Global.Acme.ServiceInterface
         Public Function [Get](request As DownloadFile) As Object
             Dim session = SessionAs(Of CustomUserSession)()
             Dim userDir = "/App_Data/uploads/" + session.UserAuthId + "/"
+
             Dim file = VirtualFiles.GetFile(userDir + request.Name)
             If file Is Nothing Then
                 Throw HttpError.NotFound(request.Name)
@@ -43,6 +44,7 @@ Namespace Global.Acme.ServiceInterface
         Public Sub [Delete](request As DeleteFile)
             Dim session = SessionAs(Of CustomUserSession)()
             Dim userDir = "/App_Data/uploads/" + session.UserAuthId + "/"
+
             VirtualFiles.DeleteFile(userDir + request.Name)
         End Sub
 
