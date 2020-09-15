@@ -13,7 +13,7 @@ Configured with [OrmLite + SQL Server](https://github.com/ServiceStack/ServiceSt
 
 ### Plain static HTML Pages + JavaScript UI
 
-No client or server UI Frameworks or external dependencies were used. Uses only Vanilla JS and functionality in the 
+No client or server UI Frameworks or external dependencies were used in this example which uses only Vanilla JS and functionality in the 
 [Embedded UMD @servicestack/client](https://docs.servicestack.net/servicestack-client-umd).
 
 E.g. the client HTML UI & Backend Service implementation for the Authenticated HTTP File Upload Management functionality is in:
@@ -24,7 +24,7 @@ E.g. the client HTML UI & Backend Service implementation for the Authenticated H
 ### JWT Auth
 
 JWT Authentication is [enabled at authentication](https://docs.servicestack.net/jwt-authprovider#switching-existing-sites-to-jwt) where
-a JWT Cookie
+the `UseTokenCookie` parameter directs ServiceStack to capture the Authenticated Session in a stateless JWT Session Cookie:
 
 ```html
 <form action="/auth/credentials" method="post">
@@ -40,3 +40,13 @@ Typed DTOs which can be re-generated with:
 
     $ cd wwwroot
     $ x ts && tsc dtos.ts
+
+### Getting Started
+
+To use this App just configure it to use a valid SQL Server Connection String in [ConfigureDb.vb](https://github.com/NetCoreApps/vb-auth/blob/master/ConfigureDb.vb)
+or **"DefaultConnection"** Connection String in appsettings.json:
+
+```vb
+Dim connString = If(Configuration.GetConnectionString("DefaultConnection"),
+    "Server=localhost;Database=test;User Id=test;Password=test;MultipleActiveResultSets=True;")
+```
