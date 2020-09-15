@@ -1,2 +1,37 @@
 # vb-auth
-VB .NET .NET Core Demo with SQL Server + Auth + JWT + File Uploads
+
+Am Empty VB.NET .NET Core project created with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
+
+    $ md ProjectName && cd ProjectName
+    $ x mix init-vb
+
+Configured with [OrmLite + SQL Server](https://github.com/ServiceStack/ServiceStack.OrmLite), 
+[ServiceStack Auth](https://docs.servicestack.net/authentication-and-authorization) including Login & Registration UIs
+& integrated [JWT Auth](https://docs.servicestack.net/jwt-authprovider) showing how to manage file uploads for authenticated users.
+
+![](https://raw.githubusercontent.com/NetCoreApps/vb-auth/master/screenshot.png)
+
+### Plain static HTML Pages + JavaScript UI
+
+No client or server UI Frameworks or external dependencies were used. Uses only Vanilla JS and functionality in the 
+[Embedded UMD @servicestack/client](https://docs.servicestack.net/servicestack-client-umd).
+
+### JWT Auth
+
+JWT Authentication is [enabled at authentication](https://docs.servicestack.net/jwt-authprovider#switching-existing-sites-to-jwt) where
+a JWT Cookie
+
+```html
+<form action="/auth/credentials" method="post">
+    <input type="hidden" name="UseTokenCookie" value="true" />
+    ...
+</form>
+```
+
+### TypeScript Generated DTOs
+
+[TypeScript Add ServiceStack Reference](https://docs.servicestack.net/typescript-add-servicestack-reference) were used to generate the 
+Typed DTOs which can be re-generated with:
+
+    $ cd wwwroot
+    $ x ts && tsc dtos.ts
