@@ -1,0 +1,105 @@
+<html>
+<head>
+    <title>Acme</title>
+    <style>
+        body { padding: 3em; }
+        body { font: 32px/36px -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif }
+        #result { display: inline-block; color: #28a745; }
+        pre { background: #f1f1f1; padding: 1em; }
+    </style>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+</head>
+<body>
+
+    <div class="container">
+
+        <div id="profile" style="float:right"></div>
+
+        <h2><a href="/json/metadata?op=Hello">Hello</a> API</h2>
+        <div class="row">
+            <div class="col">
+                <input type="text" id="txtName" onkeyup="callHello(this.value)" class="form-control form-control-lg">
+            </div>
+            <div class="col">
+                <h3 id="result"></h3>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col col-5">
+                <h3>MyTables Data</h3>
+                <div id="mytables"></div>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col col-5">
+                <h3>Page Links</h3>
+                <ul>
+                    <li><a href="/login.html">Login</a></li>
+                    <li><a href="/signup.html">Sign Up</a></li>
+                    <li><a href="/files.html">Files</a></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="row mt-5">
+            <div class="col">
+                <h3>Example Code</h3>
+                <div style="font-size: 20px; line-height: 26px">
+
+                    <pre>&lt;script src="/js/servicestack-client.js"&gt;&lt;/script&gt;</pre>
+
+                    <h3>JavaScript</h3>
+                    <pre>Object.assign(window, window['@servicestack/client']) //import
+
+var client = new JsonServiceClient()
+client.get(new Hello({ name: name }))
+    .then(function(r) {
+        console.log(r.result)
+    })
+</pre>
+
+                    <h3>TypeScript</h3>
+                    <pre>$ npm install @servicestack/client</pre>
+                    <pre>import { JsonServiceClient } from '@servicestack/client'
+
+let client = new JsonServiceClient()
+let response = await client.get(new Hello({ name }))
+</pre>
+
+                    <p>
+                        Generate Typed DTOs using
+                        <a href="https://docs.servicestack.net/typescript-add-servicestack-reference">Add ServiceStack Reference</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/js/servicestack-client.js"></script>
+    <script src="/default.js"></script>
+    <script src="/dtos.js"></script><!-- regen dtos: `x ts && tsc dtos.ts` -->
+    <script>
+
+        initAuthPage();
+
+        function callHello(val) {
+            client.get(new Hello({ name: val }))
+                .then(function (r) {
+                    document.getElementById('result').innerHTML = r.result;
+                });
+        }
+
+        client.get(new MyTables())
+            .then(function (r) {
+                document.getElementById('mytables').innerHTML = '<table class="table table-striped"><tbody>' +
+                    (r.results.map(function (r) { return '<tr><td>' + r.id + '</td><td>' + r.name + '</td></tr>'; }).join(''))
+                    + '</tbody></table>';
+            });
+
+    </script>
+
+</body>
+</html>

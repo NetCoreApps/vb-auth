@@ -1,0 +1,82 @@
+<html>
+<head>
+    <title>Upload Files Example</title>
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <style>
+        body {
+            padding: 3em;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        
+        <div id="profile" style="float:right"></div>
+
+        <h2>Upload Files</h2>
+        <div class="row mb-3">
+            <div class="col col-6 pl-0" id="uploaded"></div>
+        </div>
+        
+        <div class="row">
+            <div class="col col-4">
+                <input type="file" name="upload" class="form-control-file">
+            </div>
+            <div class="col col-3">
+                <button class="btn btn-outline-primary" data-click="uploadFile">Upload File</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="/js/servicestack-client.js"></script>
+    <script src="/default.js"></script>
+    <script src="/dtos.js"></script><!-- regen dtos: `x ts && tsc dtos.ts` -->
+    <script>
+
+        initAuthPage({ redirect: '/files.html' });
+
+        function refreshFiles() {
+            client.get(new GetUploadedFiles())
+                .then(function(r) {
+                    document.getElementById('uploaded').innerHTML = '<table class="table table-striped"><tbody>' +
+                        (r.results.map(function (x) {
+                            return '<tr><td><a href="/uploads/' + x + '">' + x + '</a></td>' +
+                                   '<td style="width:80px"><button class="btn btn-danger btn-sm" data-file="' + x + '" data-click="deleteFile">delete</button></td></tr>';
+                        }).join(''))
+                        + '</tbody></table>';
+                });
+        }
+        refreshFiles();
+
+        bindHandlers({
+
+            uploadFile: function () {
+                var fileInput = document.querySelector('input[type=file]');
+                var formData = new FormData();
+                formData.append('type', 'file');
+                formData.append('upload', fileInput.files[0]);
+
+                fetch('/uploads', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(refreshFiles)
+                    .catch(function (e) {
+                        console.log(e);
+                    });
+            },
+
+            deleteFile: function (x) {
+                var file = x.target.getAttribute('data-file');
+                client.delete(new DeleteFile({ name: file }))
+                    .then(refreshFiles);
+            }
+        });
+
+    </script>
+
+
+</body>
+</html>
