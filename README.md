@@ -1,6 +1,6 @@
 # vb-auth
 
-Am Empty VB.NET .NET Core project created with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
+An Empty VB.NET .NET Core project created with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
 
     $ md ProjectName && cd ProjectName
     $ x mix init-vb
