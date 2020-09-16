@@ -22,7 +22,7 @@ Dim connString = If(Configuration.GetConnectionString("DefaultConnection"),
     "Server=localhost;Database=test;User Id=test;Password=test;MultipleActiveResultSets=True;")
 ```
 
-Then Run with:
+Run with:
 
     $ cd vb-auth
     $ dotnet run
