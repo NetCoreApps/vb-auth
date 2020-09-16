@@ -1,15 +1,31 @@
 # vb-auth
 
-An Empty VB.NET .NET Core project created with [x dotnet tool](https://docs.servicestack.net/dotnet-tool):
-
-    $ md ProjectName && cd ProjectName
-    $ x mix init-vb
+An Empty VB.NET .NET Core project created with [init-vb](https://docs.servicestack.net/vbnet#vb-net-core-project) mix script.
 
 Configured with [OrmLite + SQL Server](https://github.com/ServiceStack/ServiceStack.OrmLite), 
 [ServiceStack Auth](https://docs.servicestack.net/authentication-and-authorization) including Login & Registration UIs
 & integrated [JWT Auth](https://docs.servicestack.net/jwt-authprovider) showing how to manage file uploads for authenticated users.
 
 ![](https://raw.githubusercontent.com/NetCoreApps/vb-auth/master/screenshot.png)
+
+### Getting Started
+
+To use this App download locally:
+
+    $ x download NetCoreApps/vb-auth
+
+Configure to use a valid SQL Server Connection String in [ConfigureDb.vb](https://github.com/NetCoreApps/vb-auth/blob/master/ConfigureDb.vb)
+or **"DefaultConnection"** Connection String in **appsettings.json**:
+
+```vb
+Dim connString = If(Configuration.GetConnectionString("DefaultConnection"),
+    "Server=localhost;Database=test;User Id=test;Password=test;MultipleActiveResultSets=True;")
+```
+
+Then Run with:
+
+    $ cd vb-auth
+    $ dotnet run
 
 ### Plain static HTML Pages + JavaScript UI
 
@@ -40,13 +56,3 @@ Typed DTOs which can be re-generated with:
 
     $ cd wwwroot
     $ x ts && tsc dtos.ts
-
-### Getting Started
-
-To use this App just configure it to use a valid SQL Server Connection String in [ConfigureDb.vb](https://github.com/NetCoreApps/vb-auth/blob/master/ConfigureDb.vb)
-or **"DefaultConnection"** Connection String in appsettings.json:
-
-```vb
-Dim connString = If(Configuration.GetConnectionString("DefaultConnection"),
-    "Server=localhost;Database=test;User Id=test;Password=test;MultipleActiveResultSets=True;")
-```
