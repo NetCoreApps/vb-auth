@@ -31,7 +31,7 @@ Namespace Global.Acme.ServiceInterface
 
         Public Function [Get](request As DownloadFile) As Object
             Dim userDir = GetUserDir()
-            Dim file = VirtualFiles.GetFile(userDir + request.Name)
+            Dim file = VirtualFiles.GetFile(userDir + VirtualPathUtils.SafeFileName(request.Name))
             If file Is Nothing Then
                 Throw HttpError.NotFound(request.Name)
             End If
@@ -41,7 +41,7 @@ Namespace Global.Acme.ServiceInterface
 
         Public Sub [Delete](request As DeleteFile)
             Dim userDir = GetUserDir()
-            VirtualFiles.DeleteFile(userDir + request.Name)
+            VirtualFiles.DeleteFile(userDir + VirtualPathUtils.SafeFileName(request.Name))
         End Sub
 
     End Class
