@@ -25,7 +25,7 @@ Namespace Global.Acme
         Overloads Sub ConfigureServices(Services as IServiceCollection)
         End Sub
 
-        Sub Configure(app AS IApplicationBuilder, env AS IWebHostEnvironment)
+        Overloads Sub Configure(app AS IApplicationBuilder, env AS IWebHostEnvironment)
             If env.IsDevelopment() 
                 app.UseDeveloperExceptionPage()
             End If
